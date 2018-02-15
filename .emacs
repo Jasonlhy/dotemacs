@@ -10,11 +10,38 @@
 ;; 2. insert newline with index
 (defun newline-without-break-of-line ()
   (interactive)
-  (let ((oldpos (point)))
-    (end-of-line)
-    (newline-and-indent)))
+  (end-of-line)
+  (newline-and-indent))
 
 (global-set-key (kbd "<C-return>") 'newline-without-break-of-line)
+
+;; Purpose: Select current word
+(defun my-mark-current-word (&optional arg allow-extend)
+  "Put point at beginning of current word, set mark at end."
+  (interactive "p\np")
+  (setq arg (if arg arg 1))
+  (if (and allow-extend
+	   (or (and (eq last-command this-command) (mark t))
+	       (region-active-p)))
+      (set-mark
+       (save-excursion
+	 (when (< (mark) (point))
+	   (setq arg (- arg)))
+	 (goto-char (mark))
+	 (forward-word arg)
+	 (point)))
+    (let ((wbounds (bounds-of-thing-at-point 'word)))
+      (unless (consp wbounds)
+	(error "No word at point"))
+      (if (>= arg 0)
+	  (goto-char (car wbounds))
+	(goto-char (cdr wbounds)))
+      (push-mark (save-excursion
+		   (forward-word arg)
+		   (point)))
+      (activate-mark))))
+
+(global-set-key (kbd "C-c C-w") 'my-mark-current-word)
 
 ;; Purpose: Hungry Delete
 (global-set-key (kbd "<C-backspace>") 'hungry-delete-backward)
@@ -23,9 +50,6 @@
 
 ;; Show Liline number
 (global-linum-mode t)
-
-(defun square (x)
-  (* x x))
 
 ;; ======================== Customize ========================
 
