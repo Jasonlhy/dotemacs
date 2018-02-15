@@ -51,6 +51,13 @@
 ;; Show Liline number
 (global-linum-mode t)
 
+;; Bigger font
+(cond 
+ ((find-font (font-spec :name "Menlo"))
+  (set-face-attribute 'default nil :family "Menlo" :height 120))
+ ((find-font (font-spec :name "Consolas"))
+  (set-face-attribute 'default nil :family "Consolas" :height 120)))
+
 ;; ======================== Customize ========================
 
 ;; - No annoying backup files
@@ -62,8 +69,11 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(backup-by-copying nil)
+ '(custom-safe-themes
+   (quote
+    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(make-backup-files nil)
- '(package-selected-packages (quote (hungry-delete magit)))
+ '(package-selected-packages (quote (solarized-theme hungry-delete magit)))
  '(ring-bell-function (quote ignore))
  '(show-paren-mode t))
 
