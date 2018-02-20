@@ -52,11 +52,14 @@
 (global-linum-mode t)
 
 ;; Bigger font
-(cond 
+(cond
+ ;; Usually Mac has higer DPI
  ((find-font (font-spec :name "Menlo"))
   (set-face-attribute 'default nil :family "Menlo" :height 120))
+ ((find-font (font-spec :name "Hack"))
+  (set-face-attribute 'default nil :family "Hack" :height 100))
  ((find-font (font-spec :name "Consolas"))
-  (set-face-attribute 'default nil :family "Consolas" :height 120)))
+  (set-face-attribute 'default nil :family "Consolas" :height 100)))
 
 ;; ======================== Customize ========================
 
