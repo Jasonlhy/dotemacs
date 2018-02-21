@@ -46,6 +46,19 @@
 ;; Purpose: Hungry Delete
 (global-set-key (kbd "<C-backspace>") 'hungry-delete-backward)
 
+;; Purpose: Handy isearch with right hand mouse
+(defun isearch-forward-region ()
+  (interactive)
+  (let ((content (buffer-substring (region-beginning) (region-end))))
+    (deactivate-mark)
+    (isearch-forward nil 1)
+    (isearch-yank-string content)))
+
+(global-set-key (kbd "C-c C-s") 'isearch-forward-region)
+
+;; For Mac only
+(when (boundp 'mac-command-modifier) (setq mac-command-modifier 'control))
+
 ;; =============== General Setting ========================
 
 ;; Show Liline number
