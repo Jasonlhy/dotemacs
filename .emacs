@@ -62,12 +62,14 @@
 (global-set-key (kbd "<C-backspace>") 'hungry-delete-backward)
 
 ;; Purpose: Handy isearch with right hand mouse
+;; May not work with Transient Mark mode
 (defun isearch-forward-region ()
   (interactive)
-  (let ((content (buffer-substring (region-beginning) (region-end))))
-    (deactivate-mark)
-    (isearch-forward nil 1)
-    (isearch-yank-string content)))
+  (when (region-active-p)
+    (let ((content (buffer-substring (region-beginning) (region-end))))
+      (deactivate-mark)
+      (isearch-forward nil 1)
+      (isearch-yank-string content))))
 
 (global-set-key (kbd "C-c C-s") 'isearch-forward-region)
 
@@ -78,6 +80,9 @@
 
 ;; Show Liline number
 (global-linum-mode t)
+
+;; Replace the old buffer list
+(global-set-key (kbd "C-x C-b") 'ibuffer)
 
 ;; Bigger font
 (cond
