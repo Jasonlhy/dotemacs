@@ -15,6 +15,21 @@
 
 (global-set-key (kbd "<C-return>") 'newline-without-break-of-line)
 
+;; Duplicate current line
+(defun duplicate-current-line ()
+  (interactive)
+  (move-beginning-of-line nil)
+  (set-mark-command nil)
+  (move-end-of-line nil)
+  
+  (let ((content (buffer-substring (region-beginning) (region-end))))
+    (deactivate-mark)
+    (message content)
+    (newline)
+    (insert content)))
+
+(global-set-key (kbd "C-c C-d") 'duplicate-current-line)
+
 ;; Purpose: Select current word
 (defun my-mark-current-word (&optional arg allow-extend)
   "Put point at beginning of current word, set mark at end."
