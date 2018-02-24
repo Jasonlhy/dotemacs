@@ -1,7 +1,9 @@
 ;; Package Management
 (require 'package)
-(package-initialize)
+
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/") t)
+
+(package-initialize)
 
 ;; =============== Keybinding ========================
 
@@ -66,10 +68,10 @@
 (defun isearch-forward-region ()
   (interactive)
   (if (region-active-p)
-    (let ((content (buffer-substring (region-beginning) (region-end))))
-      (deactivate-mark)
-      (isearch-forward nil 1)
-      (isearch-yank-string content))
+      (let ((content (buffer-substring (region-beginning) (region-end))))
+	(deactivate-mark)
+	(isearch-forward nil 1)
+	(isearch-yank-string content))
     (error "Please select a region")))
 
 (global-set-key (kbd "C-c C-s") 'isearch-forward-region)
@@ -88,6 +90,28 @@
 ;; Replace the old buffer list
 (global-set-key (kbd "C-x C-b") 'ibuffer)
 
+;; auto insert closing bracket
+(electric-pair-mode 1)
+
+;; make typing delete/overwrites selected text
+(delete-selection-mode 1)
+
+;; turn on highlighting current line
+(global-hl-line-mode 1)
+
+;; remember cursor position, for emacs 25.1 or later
+(save-place-mode 1)
+
+;; UTF-8 as default encoding
+(set-language-environment "UTF-8")
+(set-default-coding-systems 'utf-8)
+
+;; when a file is updated outside emacs, make it update if it's already opened in emacs
+(global-auto-revert-mode 1)
+
+;; Type y/n instead of yes/no
+(defalias 'yes-or-no-p 'y-or-n-p)
+
 ;; Bigger font
 (cond
  ;; Usually Mac has higer DPI
@@ -98,11 +122,51 @@
  ((find-font (font-spec :name "Consolas"))
   (set-face-attribute 'default nil :family "Consolas" :height 100)))
 
+;; keep a list of recently opened files
+(require 'recentf)
+(recentf-mode 1)
+
+;; make indentation commands use space only (never tab character)
+(progn
+  (setq-default indent-tabs-mode nil)
+  ;; emacs 23.1, 24.2, default to t
+  ;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab
+  )
+
+;; =============== Evil mode ========================
+;; C-z doesn't work well in macOS
+(setq evil-toggle-key "C-c C-z")
+
+(require 'evil)
+(evil-mode t)
+
+;; Remove all keybindings from insert-state keymap,
+;; It feels like more natural to use emacs key-binding in edit mode.
+(setcdr evil-insert-state-map nil)
+
+;; ESC to switch back normal-state
+(define-key evil-insert-state-map [escape] 'evil-normal-state)
+
+;; TAB to indent in normal-state
+;; Tab is special in markdown mode and org mode
+(define-key evil-normal-state-map (kbd "TAB") 'indent-for-tab-command)
+
+;; I don't use visual block a lot, just keep me scroll like emacs
+(define-key evil-normal-state-map (kbd "C-v") 'scroll-up-command)
+
+;; Use j/k to move one visual line insted of gj/gk
+(define-key evil-normal-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-normal-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
+(define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
+
 ;; ======================== Customize ========================
 
+;; Note: Run package-initialize-packages to install packes on different machines
 ;; - No annoying backup files
 ;; - No annoying ring-bell in command error
 ;; - show matching bracket
+;; - Don't bind [tab] to evil-jump-forward
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -112,8 +176,11 @@
  '(custom-safe-themes
    (quote
     ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(evil-want-C-i-jump nil)
  '(make-backup-files nil)
- '(package-selected-packages (quote (solarized-theme hungry-delete magit)))
+ '(package-selected-packages
+   (quote
+    (markdown-mode evil solarized-theme hungry-delete magit)))
  '(ring-bell-function (quote ignore))
  '(show-paren-mode t))
 
