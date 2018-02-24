@@ -65,13 +65,17 @@
 ;; May not work with Transient Mark mode
 (defun isearch-forward-region ()
   (interactive)
-  (when (region-active-p)
+  (if (region-active-p)
     (let ((content (buffer-substring (region-beginning) (region-end))))
       (deactivate-mark)
       (isearch-forward nil 1)
-      (isearch-yank-string content))))
+      (isearch-yank-string content))
+    (error "Please select a region")))
 
 (global-set-key (kbd "C-c C-s") 'isearch-forward-region)
+
+;; Magit
+(global-set-key (kbd "C-x g") 'magit-status)
 
 ;; For Mac only
 (when (boundp 'mac-command-modifier) (setq mac-command-modifier 'control))
