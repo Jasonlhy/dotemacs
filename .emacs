@@ -26,7 +26,7 @@
  '(make-backup-files nil)
  '(package-selected-packages
    (quote
-    (spacemacs-theme spaceline markdown-mode evil solarized-theme hungry-delete magit)))
+    (helm spacemacs-theme spaceline markdown-mode evil solarized-theme hungry-delete magit)))
  '(ring-bell-function (quote ignore))
  '(show-paren-mode t))
 
@@ -35,7 +35,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
-  '(markdown-code-face ((t (:inherit default :height 1.0 :family "Hack")))))
+ '(markdown-code-face ((t (:inherit default :height 1.0 :family "Hack")))))
 
 ;; =============== Keybinding ========================
 
@@ -200,3 +200,14 @@
 
 ;; Spacemacs theme
 (load-theme 'spacemacs-dark)
+
+;; ======= helm =========
+(require 'helm-config)
+
+;; Better find command and find files
+(global-set-key (kbd "M-x") #'helm-M-x)
+(global-set-key (kbd "C-x r b") #'helm-filtered-bookmarks)
+(global-set-key (kbd "C-x C-f") #'helm-find-files)
+
+;; helm-mode completes with completion-at-point and implements completion-in-region-function for completing-read-multiple for Emacs 24.4 and later.
+(helm-mode 1)
