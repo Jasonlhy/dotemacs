@@ -5,6 +5,38 @@
 
 (package-initialize)
 
+
+;; ======================== Customize ========================
+
+;; Note: Run package-initialize-packages to install packes on different machines
+;; - No annoying backup files
+;; - No annoying ring-bell in command error
+;; - show matching bracket
+;; - Don't bind [tab] to evil-jump-forward
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(backup-by-copying nil)
+ '(custom-safe-themes
+   (quote
+    ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
+ '(evil-want-C-i-jump nil)
+ '(make-backup-files nil)
+ '(package-selected-packages
+   (quote
+    (spacemacs-theme spaceline markdown-mode evil solarized-theme hungry-delete magit)))
+ '(ring-bell-function (quote ignore))
+ '(show-paren-mode t))
+
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+  '(markdown-code-face ((t (:inherit default :height 1.0 :family "Hack")))))
+
 ;; =============== Keybinding ========================
 
 ;; Purpose: Open a new line just under current line without break of current line
@@ -127,11 +159,13 @@
 (recentf-mode 1)
 
 ;; make indentation commands use space only (never tab character)
+;; emacs 23.1, 24.2, default to t
+;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab
 (progn
-  (setq-default indent-tabs-mode nil)
-  ;; emacs 23.1, 24.2, default to t
-  ;; if indent-tabs-mode is t, it means it may use tab, resulting mixed space and tab
-  )
+  (setq-default indent-tabs-mode nil))
+
+;; Don't show startup screen
+(setq inhibit-startup-screen t)
 
 ;; =============== Evil mode ========================
 ;; C-z doesn't work well in macOS
@@ -160,33 +194,9 @@
 (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
 (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
 
-;; ======================== Customize ========================
+;; Spacemacs Line
+(require 'spaceline-config)
+(spaceline-spacemacs-theme)
 
-;; Note: Run package-initialize-packages to install packes on different machines
-;; - No annoying backup files
-;; - No annoying ring-bell in command error
-;; - show matching bracket
-;; - Don't bind [tab] to evil-jump-forward
-(custom-set-variables
- ;; custom-set-variables was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- '(backup-by-copying nil)
- '(custom-safe-themes
-   (quote
-    ("8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
- '(evil-want-C-i-jump nil)
- '(make-backup-files nil)
- '(package-selected-packages
-   (quote
-    (markdown-mode evil solarized-theme hungry-delete magit)))
- '(ring-bell-function (quote ignore))
- '(show-paren-mode t))
-
-(custom-set-faces
- ;; custom-set-faces was added by Custom.
- ;; If you edit it by hand, you could mess it up, so be careful.
- ;; Your init file should contain only one such instance.
- ;; If there is more than one, they won't work right.
- )
+;; Spacemacs theme
+(load-theme 'spacemacs-dark)
