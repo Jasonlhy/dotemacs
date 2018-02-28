@@ -167,6 +167,9 @@
 ;; Don't show startup screen
 (setq inhibit-startup-screen t)
 
+;; Auto reload the file if any outside change
+(setq auto-revert-mode t)
+
 ;; =============== Evil mode ========================
 ;; C-z doesn't work well in macOS
 (setq evil-toggle-key "C-c C-z")
@@ -194,6 +197,11 @@
 (define-key evil-motion-state-map (kbd "<remap> <evil-next-line>") 'evil-next-visual-line)
 (define-key evil-motion-state-map (kbd "<remap> <evil-previous-line>") 'evil-previous-visual-line)
 
+;; Disable evil in certain mode
+(evil-set-initial-state 'help-mode 'emacs)
+(evil-set-initial-state 'dired-mode 'emacs)
+
+;; ======= Spacemacs ========
 ;; Spacemacs Line
 (require 'spaceline-config)
 (spaceline-spacemacs-theme)
