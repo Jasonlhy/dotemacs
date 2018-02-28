@@ -170,6 +170,9 @@
 ;; Auto reload the file if any outside change
 (setq auto-revert-mode t)
 
+;; Make windows to display chinese font smooth
+(setq inhibit-compacting-font-caches t)
+
 ;; =============== Evil mode ========================
 ;; C-z doesn't work well in macOS
 (setq evil-toggle-key "C-c C-z")
