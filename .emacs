@@ -219,3 +219,18 @@
 
 ;; helm-mode completes with completion-at-point and implements completion-in-region-function for completing-read-multiple for Emacs 24.4 and later.
 (helm-mode 1)
+
+;; ====== ibuffer =======
+(setq ibuffer-saved-filter-groups
+      (quote (("default"
+               ("dired" (mode . dired-mode))
+               ("magit" (mode . magit-status-mode))
+               ("helm" (mode . helm-major-mode))
+               ("erc" (mode . erc-mode))
+               ("emacs" (or
+                         (name . "^\\*scratch\\*$")
+                         (name . "^\\*Messages\\*$")))))))
+
+(add-hook 'ibuffer-mode-hook
+          (lambda ()
+            (ibuffer-switch-to-saved-filter-groups "default")))
