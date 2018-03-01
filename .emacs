@@ -35,6 +35,7 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
+ '(hl-line ((t (:background "darkblue"))))
  '(markdown-code-face ((t (:inherit default :height 1.0 :family "Hack")))))
 
 ;; =============== Keybinding ========================
@@ -211,7 +212,6 @@
 
 ;; Spacemacs theme
 (load-theme 'spacemacs-dark)
-(set-face-background 'hl-line "darkblue")
 
 ;; ======= helm =========
 (require 'helm-config)
