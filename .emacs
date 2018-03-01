@@ -211,6 +211,7 @@
 
 ;; Spacemacs theme
 (load-theme 'spacemacs-dark)
+(set-face-background 'hl-line "darkblue")
 
 ;; ======= helm =========
 (require 'helm-config)
