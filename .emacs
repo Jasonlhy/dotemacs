@@ -174,6 +174,13 @@
 ;; Make windows to display chinese font smooth
 (setq inhibit-compacting-font-caches t)
 
+;; check OS type
+(cond
+ ((string-equal system-type "darwin") ; Mac OS X
+  (progn
+    (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
+    (setq exec-path (append exec-path '("/usr/local/bin"))))))
+
 ;; =============== Evil mode ========================
 ;; C-z doesn't work well in macOS
 (setq evil-toggle-key "C-c C-z")
