@@ -24,6 +24,7 @@
     ("fa2b58bb98b62c3b8cf3b6f02f058ef7827a8e497125de0254f56e373abee088" "bffa9739ce0752a37d9b1eee78fc00ba159748f50dc328af4be661484848e476" "8aebf25556399b58091e533e455dd50a6a9cba958cc4ebb0aab175863c25b9a4" default)))
  '(evil-want-C-i-jump nil)
  '(make-backup-files nil)
+ '(dynamic-completion-mode t)
  '(package-selected-packages
    (quote
     (helm spacemacs-theme spaceline markdown-mode evil solarized-theme hungry-delete magit)))
@@ -180,6 +181,15 @@
   (progn
     (setenv "PATH" (concat (getenv "PATH") ":/usr/local/bin"))
     (setq exec-path (append exec-path '("/usr/local/bin"))))))
+
+;; Save whatever’s in the current (system) clipboard before
+;; replacing it with the Emacs’ text.
+;; https://github.com/dakrone/eos/blob/master/eos.org
+;; It prevents from killing text replace the one inside system clipboard you want to paste into emacs
+(setq save-interprogram-paste-before-kill t)
+
+;; Siple auto complete wording
+(global-set-key "\M-/" 'hippie-expand)
 
 ;; =============== Evil mode ========================
 ;; C-z doesn't work well in macOS
