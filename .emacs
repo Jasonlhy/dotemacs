@@ -221,6 +221,7 @@
 ;; Disable evil in certain mode
 (evil-set-initial-state 'help-mode 'emacs)
 (evil-set-initial-state 'dired-mode 'emacs)
+(evil-set-initial-state 'image-mode 'emacs)
 
 ;; ======= Spacemacs ========
 ;; Spacemacs Line
